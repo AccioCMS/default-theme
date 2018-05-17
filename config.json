@@ -1,0 +1,61 @@
+{
+  "title" :  "DefaultTitle",
+  "namespace" :  "DefaultTheme",
+  "organisation" :  "DefaultOrganisation",
+  "author" :  {
+    "name" :  "DefaultAuthor",
+    "email" :  "DefaultEmail"
+  },
+  "version " :  "1.0.0",
+  "icon" :  "pencil",
+  "css" : [
+    {
+      "path": "bootstrap.min.css",
+      "merge": true
+    },
+    {
+      "path": "style.css",
+      "merge": true
+    },
+    {
+      "path": "header.css",
+      "merge": false,
+      "inline": true
+    },
+    {
+      "path" : "all.css",
+      "merge": false,
+      "showInHeader": false
+    }
+  ],
+  "js" :  [
+    {
+      "path" : "jquery-3.2.1.slim.min.js",
+      "attributes" : {
+        "async": false
+      },
+      "merge": true
+    },
+    {
+      "path": "popper.min.js",
+      "merge": true
+    },
+    {
+      "path": "bootstrap.min.js",
+      "merge": true
+    },
+    {
+      "path": "all.js",
+      "showInHeader": false
+    }
+  ],
+  "mix" : {
+    "sass" : [
+      "header.scss",
+      "style.scss"
+    ],
+    "mergeStyles": "all.css",
+    "mergeScripts": "all.js"
+  },
+  "gzip": false
+}

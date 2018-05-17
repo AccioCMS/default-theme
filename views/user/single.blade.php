@@ -14,7 +14,9 @@
             {{$author->avatarImage(200,200, true)}}
             <span class="single-author-content">
                 <h1 >{{$author->fullName}}</h1>
-                <p class="blog-description">{!! $author->about !!}</p>
+                @if($author->about)
+                    <p class="blog-description">{!! $author->about !!}</p>
+                @endif
             </span>
         </div>
     </div>

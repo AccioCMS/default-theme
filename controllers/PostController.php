@@ -47,7 +47,7 @@ class PostController extends MainController{
             return error404();
         }
 
-        $posts = Post::getFromCache();
+        $posts = Post::getFromCache('post_articles')->published();
         $posts = Pagination::LengthAwarePaginator($posts);
 
         return view(Theme::view('posts/index'),compact('posts'));

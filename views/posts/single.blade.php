@@ -14,11 +14,13 @@
                 <div class="blog-post">
                     <h2 class="blog-post-title">{{$post->title}}</h2>
                     <p class="blog-post-meta">
-                        {{$post->created_at->diffForHumans()}} @lang('base.by')
-                        <a href="{{ route('user.single',['authorSlug' => $post->cachedUser()->slug])}}">
-                            <img class="avatar" src="{{ $post->cachedUser()->avatar(200,200,true)}}" alt="" />
-                            {{ $post->cachedUser()->fullName}}
-                        </a>
+                        @if($post->user)
+                            {{$post->created_at->diffForHumans()}} @lang('base.by')
+                            <a href="{{ route('user.single',['authorSlug' => $post->user->slug])}}">
+                                <img class="avatar" src="{{ $post->user->avatar(200,200,true)}}" alt="" />
+                                {{ $post->user->fullName}}
+                            </a>
+                        @endif
                     </p>
 
                     <div class="post-wrapper">

@@ -27,7 +27,7 @@ class UserController extends MainController{
             ->with('featuredImage')
             ->where('createdByUserID', $author['userID'])
             ->orderBy('published_at','DESC')
-            ->paginate(10);
+            ->paginate(16);
 
         return view(Theme::view('user/single'),compact(['author','posts']));
     }

@@ -35,7 +35,12 @@ class CategoryController extends MainController{
             return error404();
         }
 
-        $posts = Post::getFromCache(\Request::route('postTypeSlug'), $category->categoryID);
+        $posts = Post::getFromCache(\Request::route('postTypeSlug'), [
+          'where'=> [
+            'categoryID' => $category->categoryID,
+            'post_type' => \Request::route('postTypeSlug')
+          ]]
+        );
         $posts = Pagination::LengthAwarePaginator($posts);
         return view(Theme::view('category/posts'),compact('category', 'posts'));
     }

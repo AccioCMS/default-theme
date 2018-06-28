@@ -12,17 +12,18 @@ use Illuminate\Support\Facades\App;
 class SearchController extends MainController{
 
     public function index(){
-        if(Search::getKeyword()) {
+        $keyword = Search::getKeyword();
+        if($keyword) {
             $postsObj = new \App\Models\Post();
             $posts = $postsObj->setTable('post_articles')
                 ->published()
-                ->where('title','LIKE',"%".Search::getKeyword()."%")
+                ->where('title','LIKE',"%".$keyword."%")
                 ->orderBy('published_at', 'DESC')
                 ->paginate(4);
 
-            return view(Theme::view('search/search_results'),compact('posts'));
+            return view(Theme::view('search/search_results'),compact('keyword','posts'));
         }else{
-            return view(Theme::view('search/search_results'));
+            return view(Theme::view('search/search_results',compact('keyword')));
         }
     }
 }

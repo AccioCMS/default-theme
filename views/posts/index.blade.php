@@ -33,7 +33,7 @@
                             <label>
                                 <?php
                                 if($post->hasCategory()){
-                                    print $post->cachedCategory->title;
+                                    print $post->category->title;
                                 }
                                 ?>
                             </label>

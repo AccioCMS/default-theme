@@ -24,11 +24,12 @@ class TagController extends MainController{
         $postsObj = new Post();
         $postsObj->setTable(PostType::getSlug());
         $posts = $postsObj->join('tags_relations','tags_relations.belongsToID',PostType::getSlug().'.postID')
-            ->where('belongsTo',PostType::getSlug())
-            ->published()
-            ->where('tagID',$tag['tagID'])
-            ->orderBy('published_at','DESC')
-            ->paginate(10);
+          ->where('belongsTo',PostType::getSlug())
+          ->with('featuredImage')
+          ->published()
+          ->where('tagID',$tag['tagID'])
+          ->orderBy('published_at','DESC')
+          ->paginate(16);
 
         return view(Theme::view('tags/single'),compact(['posts','tag']));
     }

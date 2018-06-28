@@ -21,8 +21,7 @@
     <div class="album text-muteds">
         <div class="container">
             <?php
-            if(\Accio\Support\Facades\Search::getKeyword()) {
-
+            if($keyword) {
                 if(!$posts->isEmpty()){
                     ?>
                     <p class="lead blog-description">
@@ -57,14 +56,14 @@
                 }else{
                     ?>
                     <p>
-                        {{@trans('search.results.no_results')}}
+                        {{@trans('searchsearch.results.no_results')}}
                     </p>
                     <?php
                 }
             }else{
                 ?>
                 <p>
-                    {{@trans('base.searchTermEmpty')}}
+                    {{@trans('search.emptyKeyword')}}
                 </p>
                 <?php
              }

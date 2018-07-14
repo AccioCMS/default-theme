@@ -42,13 +42,20 @@ class PostController extends MainController{
         ];
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @throws \Exception
+     */
     public function index(){
         if(PostType::validatePostType()){
             return error404();
         }
 
-        $posts = Post::getFromCache('post_articles')->published();
-        $posts = Pagination::LengthAwarePaginator($posts);
+        $posts = Post::cache('post_articles')
+          ->getItems()
+          ->published()
+          ->orderBy('published_at','DESC')
+          ->paginate();
 
         return view(Theme::view('posts/index'),compact('posts'));
     }

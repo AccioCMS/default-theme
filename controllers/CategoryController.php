@@ -24,24 +24,30 @@ class CategoryController extends MainController{
             ];
     }
 
-    public function single($TYPE){
+    public function single(){
         $category = Category::findBySlug(\Request::route('categorySlug'));
         return view(Theme::view('category.single'), compact('category', 'posts'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @throws \Exception
+     */
     public function posts(Request $request){
         $category = Category::findBySlug(\Request::route('categorySlug'));
         if(!$category){
             return error404();
         }
 
-        $posts = Post::getFromCache(\Request::route('postTypeSlug'), [
-          'where'=> [
-            'categoryID' => $category->categoryID,
-            'post_type' => \Request::route('postTypeSlug')
-          ]]
-        );
-        $posts = Pagination::LengthAwarePaginator($posts);
+        $posts = Post::cache("category_posts_".$category->categoryID)
+          ->whereCache('categories_relations.categoryID', $category->categoryID)
+          ->getItems()
+          ->published()
+          ->orderBy('published_at','DESC')
+          ->paginate();
+
+
         return view(Theme::view('category/posts'),compact('category', 'posts'));
     }
 

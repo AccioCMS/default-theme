@@ -30,7 +30,6 @@ class PagesController extends MainController {
      * Change the return view() if you want to change the template file
      * */
     public function homepage(){
-
         return view(Theme::view('pages/home'));
     }
 

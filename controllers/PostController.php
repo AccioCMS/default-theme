@@ -52,10 +52,11 @@ class PostController extends MainController{
         }
 
         $posts = Post::cache('post_articles')
-          ->getItems()
           ->published()
           ->orderBy('published_at','DESC')
-          ->paginate();
+          ->take(2)
+          ->getItems()
+          ->paginate(10);
 
         return view(Theme::view('posts/index'),compact('posts'));
     }

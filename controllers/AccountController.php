@@ -23,6 +23,7 @@ class AccountController extends MainController
         if(App::routesAreCached()) {
             $this->middleware('auth');
         }
+        
     }
 
     /**

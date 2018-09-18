@@ -78,14 +78,13 @@ class RegisterController extends MainController
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data){
         return User::create([
             'firstName' => $data['firstName'],
             'lastName' => $data['lastName'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'active' => '0',
+            'isActive' => false,
             'group' => json_encode([1]),
             'slug' => str_slug($data['firstName'].'-'.$data['lastName']),
         ]);

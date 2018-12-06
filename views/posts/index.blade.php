@@ -4,6 +4,7 @@
 
 @section('header')
     @parent
+    {{metaTags()}}
 @endsection
 
 @section('content')

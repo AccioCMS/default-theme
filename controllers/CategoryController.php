@@ -5,6 +5,7 @@ namespace Themes\DefaultTheme\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\PostType;
 use App\Models\Theme;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Frontend\MainController;
@@ -40,13 +41,19 @@ class CategoryController extends MainController{
             return error404();
         }
 
-        $posts = Post::cache("category_posts_".$category->categoryID, function($query) use($category){
-            return $query->generateCacheByCategory($category->categoryID);
-        })
-          ->published()
-          ->orderBy('published_at','DESC')
-          ->getItems()
-          ->paginate();
+        $postType = PostType::findByID($category->postTypeID);
+        $postObj = (new Post())->setTable($postType->slug);
+
+        $categoryTable = categoriesRelationTable($postType->slug);
+        $posts = $postObj
+            ->join($categoryTable, $categoryTable.'.postID', $postType->slug . '.postID')
+            ->where($categoryTable.'.categoryID', $category->categoryID)
+            ->with($postObj->getDefaultRelations($postType))
+            ->where('status->'.\App::getLocale(),'published')
+            ->orderBy('published_at', 'DESC')
+            ->paginate(25);
+
+            $posts = Post::filterPublished($posts);
 
         return view(Theme::view('category/posts'),compact('category', 'posts'));
     }

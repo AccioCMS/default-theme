@@ -1,14 +1,13 @@
 @extends('DefaultTheme.views.index')
 
 @section('meta')
-    {{metaTags($post)}}
+    {{--{{metaTags($post)}}--}}
 @endsection
 
 @section('content')
+
     <div class="container">
         <div class="row">
-
-
             <div class="col-sm-8 blog-main">
 
                 <div class="blog-post">
@@ -32,7 +31,7 @@
 
                         <div class="post-content">
                             <?php
-                                print $post->content();
+                            print $post->content();
                             ?>
                         </div>
                     </div>
@@ -76,4 +75,5 @@
         </div><!-- /.row -->
 
     </div>
+
 @endsection

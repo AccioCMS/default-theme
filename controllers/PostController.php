@@ -2,18 +2,14 @@
 
 namespace Themes\DefaultTheme\Controllers;
 
-use App\Models\Media;
-use App\Models\MediaRelation;
-use App\Models\MenuLink;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostType;
 use App\Models\Theme;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Route;
-use Accio\App\Models\PostModel;
-use Accio\Support\Facades\Pagination;
 use App\Http\Controllers\Frontend\MainController;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Input\Input;
 
 class PostController extends MainController{
 
@@ -50,23 +46,21 @@ class PostController extends MainController{
         if(PostType::validatePostType()){
             return error404();
         }
-
-        $posts = Post::cache('post_articles')
-          ->published()
-          ->orderBy('published_at','DESC')
-          ->take(2)
-          ->getItems()
-          ->paginate(10);
+        $postType = (\Request::route('postTypeSlug') ? \Request::route('postTypeSlug') : "post_articles");
+        $posts = (new Post())->setTable($postType)
+            ->with(["categories", "featuredimage"])
+            ->orderBy('published_at','DESC')
+            ->paginate(10);
 
         return view(Theme::view('posts/index'),compact('posts'));
     }
 
     public function single(){
-        $post = Post::findBySlug(\Request::route('postSlug'));
+        $post = Post::findBySlug(\Request::route('postSlug'), "post_articles");
         if(!$post){
             return error404();
         }
 
-        return view(Theme::view('posts/single'),compact('post'));
+        return view(Theme::view('posts/single'),compact('post', 'users'));
     }
 }

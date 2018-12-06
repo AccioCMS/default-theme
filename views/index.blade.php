@@ -19,6 +19,7 @@
 <?php event('theme:before_body'); ?>
 <body>
     <?php event('theme:body_start'); ?>
+
     @section('header')
         <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
             <a class="navbar-brand" href="#">Logo</a>
@@ -74,5 +75,6 @@
         {!! js(false, ['async' => true]) !!}
     @show
 
+    <?php event('theme:body_end'); ?>
 </body>
 </html>

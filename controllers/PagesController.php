@@ -3,6 +3,7 @@
 namespace Themes\DefaultTheme\Controllers;
 
 use App\Http\Controllers\Frontend\MainController;
+use App\Models\Article;
 use App\Models\Post;
 use App\Models\Theme;
 use HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware;
@@ -33,7 +34,6 @@ class PagesController extends MainController {
         return view(Theme::view('pages/home'));
     }
 
-
     /**
      * This function is usually used to load a page
      * */
@@ -42,7 +42,6 @@ class PagesController extends MainController {
         if(!$post){
             return error404();
         }
-
         return view(Theme::view('pages/single'),compact('post'));
     }
 }

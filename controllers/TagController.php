@@ -23,13 +23,13 @@ class TagController extends MainController{
          //get posts by tag
         $postsObj = new Post();
         $postsObj->setTable(PostType::getSlug());
-        $posts = $postsObj->join('tags_relations','tags_relations.belongsToID',PostType::getSlug().'.postID')
-          ->where('belongsTo',PostType::getSlug())
+        $posts = $postsObj->join(PostType::getSlug().'_tags', PostType::getSlug().'_tags.postID',PostType::getSlug().'.postID')
           ->with('featuredImage')
-          ->published()
           ->where('tagID',$tag['tagID'])
           ->orderBy('published_at','DESC')
           ->paginate(16);
+
+        $posts = Post::filterPublished($posts);
 
         return view(Theme::view('tags/single'),compact(['posts','tag']));
     }

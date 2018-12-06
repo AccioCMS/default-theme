@@ -2,7 +2,7 @@
 
 @section('meta')
     @parent
-    {{metaTags(homepage())}}
+    {{ metaTags(homepage()) }}
 @endsection
 
 @section('header')
